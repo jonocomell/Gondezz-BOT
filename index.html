@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gondezz Bot</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:black;
+color:white;
+text-align:center;
+overflow-x:hidden;
+}
+
+/* GALAXY */
+
+.galaxy{
+position:fixed;
+width:100%;
+height:100%;
+background:radial-gradient(circle at center,#111 0%,#000 80%);
+z-index:0;
+}
+
+/* STARS */
+
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+pointer-events:none;
+z-index:1;
+}
+
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+from{opacity:0.2}
+to{opacity:1}
+}
+
+/* RAIN */
+
+.rain{
+position:fixed;
+width:100%;
+height:100%;
+pointer-events:none;
+z-index:2;
+}
+
+.drop{
+position:absolute;
+width:2px;
+height:20px;
+background:rgba(255,255,255,0.4);
+animation:rain linear infinite;
+}
+
+@keyframes rain{
+0%{transform:translateY(-100px)}
+100%{transform:translateY(100vh)}
+}
+
+/* LIGHTNING */
+
+.lightning{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:white;
+opacity:0;
+pointer-events:none;
+z-index:3;
+}
+
+.flash{
+animation:flash 0.3s;
+}
+
+@keyframes flash{
+0%{opacity:0}
+50%{opacity:0.8}
+100%{opacity:0}
+}
+
+/* UI */
+
+.ui{
+position:relative;
+z-index:10;
+}
+
+/* LOGO */
+
+.logo img{
+width:160px;
+border-radius:50%;
+box-shadow:0 0 50px #5865F2;
+margin-top:80px;
+}
+
+/* TITLE */
+
+.title{
+font-size:32px;
+font-weight:bold;
+margin-top:20px;
+}
+
+/* STATUS */
+
+.status{
+margin-top:10px;
+font-size:18px;
+}
+
+.online{
+color:#2ecc71;
+}
+
+.offline{
+color:#e74c3c;
+}
+
+/* BUTTON GRID */
+
+.container{
+max-width:800px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+padding:40px;
+}
+
+/* BUTTON */
+
+.invite{
+padding:16px;
+border-radius:40px;
+text-decoration:none;
+color:white;
+font-weight:bold;
+transition:0.3s;
+box-shadow:0 0 10px rgba(255,255,255,0.2);
+}
+
+.invite:hover{
+transform:scale(1.08);
+box-shadow:0 0 25px rgba(255,255,255,0.8);
+}
+
+/* COLORS */
+
+.b1{background:#e74c3c}
+.b2{background:#1abc9c}
+.b3{background:#e84393}
+.b4{background:#e67e22}
+.b5{background:#3498db}
+.b6{background:#9b59b6}
+.b7{background:#f1c40f;color:black}
+.b8{background:#2ecc71}
+.b9{background:#16a085}
+.b10{background:#34495e}
+
+footer{
+margin-top:20px;
+opacity:0.6;
+padding-bottom:30px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="galaxy"></div>
+<div class="stars" id="stars"></div>
+<div class="rain" id="rain"></div>
+<div class="lightning" id="lightning"></div>
+
+<div class="ui">
+
+<div class="logo">
+<img src="https://i.imgur.com/6V5QIgg.jpeg">
+</div>
+
+<div class="title">
+Gondezz BOT 24/7
+</div>
+
+<div class="status">
+Bot Status: <span id="botStatus">Checking...</span>
+</div>
+
+<div class="container">
+
+<a class="invite b1" href="https://discord.com/oauth2/authorize?client_id=1481703480748933271&permissions=8&scope=bot">Invite Bot 1</a>
+
+<a class="invite b2" href="https://discord.com/oauth2/authorize?client_id=1481720137689075832&permissions=8&scope=bot">Invite Bot 2</a>
+
+<a class="invite b3" href="https://discord.com/oauth2/authorize?client_id=1481727496507621487&permissions=8&scope=bot">Invite Bot 3</a>
+
+<a class="invite b4" href="https://discord.com/oauth2/authorize?client_id=1481727900267843604&permissions=8&scope=bot">Invite Bot 4</a>
+
+<a class="invite b5" href="https://discord.com/oauth2/authorize?client_id=1482537159654379540&permissions=8&scope=bot">Invite Bot 5</a>
+
+<a class="invite b6" href="https://discord.com/oauth2/authorize?client_id=1482537324226154689&permissions=8&scope=bot">Invite Bot 6</a>
+
+<a class="invite b7" href="https://discord.com/oauth2/authorize?client_id=1482537428706394310&permissions=8&scope=bot">Invite Bot 7</a>
+
+<a class="invite b8" href="https://discord.com/oauth2/authorize?client_id=1482537527352103034&permissions=8&scope=bot">Invite Bot 8</a>
+
+<a class="invite b9" href="https://discord.com/oauth2/authorize?client_id=1482537638425792742&permissions=8&scope=bot">Invite Bot 9</a>
+
+<a class="invite b10" href="https://discord.com/oauth2/authorize?client_id=1482537816058626130&permissions=8&scope=bot">Invite Bot 10</a>
+
+</div>
+
+<footer>
+© 2026 Gondezz BOT
+</footer>
+
+</div>
+
+<script>
+
+/* STARS */
+
+let stars=document.getElementById("stars")
+
+for(let i=0;i<120;i++){
+
+let star=document.createElement("div")
+star.className="star"
+
+star.style.left=Math.random()*100+"%"
+star.style.top=Math.random()*100+"%"
+
+stars.appendChild(star)
+
+}
+
+/* RAIN */
+
+let rain=document.getElementById("rain")
+
+for(let i=0;i<150;i++){
+
+let drop=document.createElement("div")
+drop.className="drop"
+
+drop.style.left=Math.random()*100+"%"
+drop.style.animationDuration=(0.5+Math.random())+"s"
+
+rain.appendChild(drop)
+
+}
+
+/* LIGHTNING */
+
+function lightning(){
+
+let flash=document.getElementById("lightning")
+
+flash.classList.add("flash")
+
+setTimeout(()=>{
+flash.classList.remove("flash")
+},300)
+
+}
+
+setInterval(lightning,7000)
+
+/* BOT STATUS */
+
+async function checkStatus(){
+
+let status=document.getElementById("botStatus")
+
+try{
+
+let res=await fetch("https://discord.com/api/v10/applications/1481703480748933271")
+
+if(res.status===200){
+
+status.innerText="ONLINE"
+status.className="online"
+
+}else{
+
+status.innerText="UNKNOWN"
+status.className="offline"
+
+}
+
+}catch{
+
+status.innerText="OFFLINE"
+status.className="offline"
+
+}
+
+}
+
+checkStatus()
+
+setInterval(checkStatus,20000)
+
+</script>
+
+</body>
+</html>
